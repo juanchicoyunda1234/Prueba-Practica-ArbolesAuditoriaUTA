@@ -642,15 +642,6 @@ La auditoría con los datos obligatorios cargados (9 unidades, 5 hojas, altura 3
 
 Cadena contra equilibrado con n = 12 y con n = 20. Buscar una clave mayor que todas obliga a la cadena a visitar los n nodos; en el árbol de inserción por medianas se visitan muy pocos. Código: [`AnalisisBusqueda.java`](src/main/java/uta/arboles/negocio/AnalisisBusqueda.java).
 
-### 07 y 08 · Evidencia de GitHub
-
-Se toman en GitHub cuando existan la pull request y los commits, y se guardan en `docs/capturas/` con estos nombres:
-
-| ☐ | Archivo | Qué debe mostrar |
-|---|---|---|
-| ☐ | `07-pull-request-revisada.png` | Pull request aprobada por otro integrante |
-| ☐ | `08-historial-commits.png` | Historial de commits con autores distintos |
-
 ---
 
 ## Bibliografía
