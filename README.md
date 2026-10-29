@@ -605,3 +605,54 @@ Invariante del ABB: se cumple
 
 ---
 
+## Capturas de evidencia
+
+Imágenes de la ejecución del programa, guardadas en [`docs/capturas/`](docs/capturas/). Las imágenes 01 a 06 son el render de la salida real de cada ejecución (terminal renderizada con los mismos comandos de este README); cada integrante puede sumar sus propias capturas de pantalla en la misma carpeta.
+
+### 01 · Compilación
+
+![Compilación sin errores](docs/capturas/01-compilacion.png)
+
+Los dos `javac` (programa y pruebas) terminan con código de salida 0 y generan los paquetes `app`, `modelo` y `negocio`.
+
+### 02 · Pruebas automatizadas: 24 casos aprobados
+
+![Pruebas automatizadas](docs/capturas/02-pruebas-24-ok.png)
+
+Los 24 casos pasan y no hay fallos. Texto completo: [`salida-pruebas.txt`](docs/evidencia/salida-pruebas.txt). Qué requisito cubre cada caso: [Cobertura de pruebas](#cobertura-de-pruebas).
+
+### 03 · Escenario obligatorio completo (opción 6)
+
+![Escenario obligatorio](docs/capturas/03-escenario-obligatorio.png)
+
+Los pasos 1 a 10 del enunciado, calculados en el momento. Explicación de cada paso: [Evidencia de ejecución y explicación](#evidencia-de-ejecución-y-explicación). Texto completo: [`salida-escenario.txt`](docs/evidencia/salida-escenario.txt).
+
+### 04 · Cambios en vivo sobre el ABB (opción 2)
+
+![Cambios en vivo](docs/capturas/04-cambio-en-vivo.png)
+
+Con los datos obligatorios cargados se tecleó en el momento: insertar la matrícula 90, modificar la 35, cambiar la 35 por la 36 y eliminar la raíz 50. Al eliminar la raíz, la reemplaza su sucesor inorden (60), que aparece como primer valor del preorden; el inorden sigue ascendente y el invariante se cumple. Es lo que permite que el docente cambie matrículas en vivo.
+
+### 05 · Auditoría (opción 3)
+
+![Auditoría](docs/capturas/05-auditoria.png)
+
+La auditoría con los datos obligatorios cargados (9 unidades, 5 hojas, altura 3, 12 estudiantes, matrícula menor 20 y mayor 85) y de nuevo después de eliminar 20, 60 y 70 (9 estudiantes, menor 30, mayor 85). Detalle de la salida inicial: [`salida-auditoria.txt`](docs/evidencia/salida-auditoria.txt).
+
+### 06 · Análisis de comparaciones (opción 4)
+
+![Análisis de comparaciones](docs/capturas/06-analisis-busqueda.png)
+
+Cadena contra equilibrado con n = 12 y con n = 20. Buscar una clave mayor que todas obliga a la cadena a visitar los n nodos; en el árbol de inserción por medianas se visitan muy pocos. Código: [`AnalisisBusqueda.java`](src/main/java/uta/arboles/negocio/AnalisisBusqueda.java).
+
+### 07 y 08 · Evidencia de GitHub
+
+Se toman en GitHub cuando existan la pull request y los commits, y se guardan en `docs/capturas/` con estos nombres:
+
+| ☐ | Archivo | Qué debe mostrar |
+|---|---|---|
+| ☐ | `07-pull-request-revisada.png` | Pull request aprobada por otro integrante |
+| ☐ | `08-historial-commits.png` | Historial de commits con autores distintos |
+
+---
+
