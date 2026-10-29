@@ -7,6 +7,7 @@ import uta.arboles.modelo.UnidadAcademica;
 public class ArbolGeneral {
 
     private UnidadAcademica raiz;
+
     public boolean estaVacio() {
         return raiz == null;
     }
@@ -95,6 +96,61 @@ public class ArbolGeneral {
         return contarHojas(raiz);
     }
 
+    public boolean eliminar(String codigo) {
+        UnidadAcademica unidad = buscar(codigo);
+        if (unidad == null || unidad == raiz || !unidad.esHoja()) {
+            return false;
+        }
+        unidad.getPadre().getHijos().remove(unidad);
+        unidad.setPadre(null);
+        return true;
+    }
+
+    public boolean renombrar(String codigo, String nuevoNombre) {
+        UnidadAcademica unidad = buscar(codigo);
+        String nombreNormalizado = normalizarNombre(nuevoNombre);
+        if (unidad == null || nombreNormalizado == null) {
+            return false;
+        }
+        unidad.setNombre(nombreNormalizado);
+        return true;
+    }
+
+    public String imprimirJerarquia() {
+        if (raiz == null) {
+            return "(árbol vacío)\n";
+        }
+        StringBuilder salida = new StringBuilder();
+        imprimir(raiz, 0, salida);
+        return salida.toString();
+    }
+
+    public ArrayList<String> preorden() {
+        ArrayList<String> codigos = new ArrayList<>();
+        preorden(raiz, codigos);
+        return codigos;
+    }
+
+    public boolean jerarquiaValida() {
+        return validar(raiz, null, new ArrayList<>());
+    }
+
+    public NodoHijoHermano convertirAHijoHermano() {
+        if (raiz == null) {
+            return null;
+        }
+        return convertir(raiz);
+    }
+
+    public static String describirHijoHermano(NodoHijoHermano raizBinaria) {
+        if (raizBinaria == null) {
+            return "(árbol vacío)\n";
+        }
+        StringBuilder salida = new StringBuilder();
+        describir(raizBinaria, salida);
+        return salida.toString();
+    }
+
     private UnidadAcademica buscar(UnidadAcademica actual, String codigo) {
         if (actual == null) {
             return null;
@@ -145,6 +201,71 @@ public class ArbolGeneral {
             total += contarHojas(hijo);
         }
         return total;
+    }
+
+    private void imprimir(UnidadAcademica actual, int nivel, StringBuilder salida) {
+        for (int i = 0; i < nivel; i++) {
+            salida.append("  ");
+        }
+        salida.append(actual).append('\n');
+        for (UnidadAcademica hijo : actual.getHijos()) {
+            imprimir(hijo, nivel + 1, salida);
+        }
+    }
+
+    private void preorden(UnidadAcademica actual, ArrayList<String> codigos) {
+        if (actual == null) {
+            return;
+        }
+        codigos.add(actual.getCodigo());
+        for (UnidadAcademica hijo : actual.getHijos()) {
+            preorden(hijo, codigos);
+        }
+    }
+
+    private boolean validar(UnidadAcademica actual, UnidadAcademica padreEsperado, ArrayList<String> vistos) {
+        if (actual == null) {
+            return true;
+        }
+        if (actual.getPadre() != padreEsperado || vistos.contains(actual.getCodigo())) {
+            return false;
+        }
+        vistos.add(actual.getCodigo());
+        for (UnidadAcademica hijo : actual.getHijos()) {
+            if (!validar(hijo, actual, vistos)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private NodoHijoHermano convertir(UnidadAcademica unidad) {
+        NodoHijoHermano nodo = new NodoHijoHermano(unidad.getCodigo(), unidad.getNombre());
+        NodoHijoHermano anterior = null;
+        for (UnidadAcademica hijo : unidad.getHijos()) {
+            NodoHijoHermano convertido = convertir(hijo);
+            if (anterior == null) {
+                nodo.setHijoIzquierdo(convertido);
+            } else {
+                anterior.setHermanoDerecho(convertido);
+            }
+            anterior = convertido;
+        }
+        return nodo;
+    }
+
+    private static void describir(NodoHijoHermano actual, StringBuilder salida) {
+        if (actual == null) {
+            return;
+        }
+        String hijo = actual.getHijoIzquierdo() == null ? "-" : actual.getHijoIzquierdo().getCodigo();
+        String hermano = actual.getHermanoDerecho() == null ? "-" : actual.getHermanoDerecho().getCodigo();
+        salida.append(actual.getCodigo())
+                .append(" | hijo izquierdo: ").append(hijo)
+                .append(" | hermano derecho: ").append(hermano)
+                .append('\n');
+        describir(actual.getHijoIzquierdo(), salida);
+        describir(actual.getHermanoDerecho(), salida);
     }
 
     private static String normalizarCodigo(String codigo) {
