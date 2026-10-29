@@ -656,3 +656,28 @@ Se toman en GitHub cuando existan la pull request y los commits, y se guardan en
 
 ---
 
+## GitHub y colaboración
+
+- Una rama `feature/<integrante>-<tema>` por parte: `feature/joseph-modelo`, `feature/andres-arbol-general`, `feature/andres-abb`, `feature/juancarlos-auditoria-analisis`, `feature/noemi-menu`, `feature/juancarlos-pruebas`, `feature/jeremy-diagramas` y `feature/jullisa-evidencia`.
+- Cada integrante hace sus commits desde su propia cuenta, con mensajes que describan el cambio, sobre los módulos de la tabla de integrantes.
+- Al menos una pull request revisada por otro integrante antes de fusionar a `main`.
+- No se atribuyen aportes que no tengan evidencia en el historial del repositorio.
+
+### Tabla de contribuciones
+
+Completar con las evidencias reales del repositorio (enlace a commits y a la pull request).
+
+| Integrante | Usuario GitHub | Rama | Parte implementada | Prueba asociada | Commits / PR |
+|---|---|---|---|---|---|
+| Chico Yunda Juan Carlos | [juanchicoyunda1234](https://github.com/juanchicoyunda1234) | | | | |
+| Torosina Armendariz Jeremy | [WinoSpop](https://github.com/WinoSpop) | | | | |
+| Altamirano Segovia Jullisa | [jullisaaltamirano2017-boop](https://github.com/jullisaaltamirano2017-boop) | | | | |
+| Romo Nunez Joseph | [wayusa25-cmyk](https://github.com/wayusa25-cmyk) | | | | |
+| Llamuca Abrajan Andres | [llamucaandres161](https://github.com/llamucaandres161) | | | | |
+| Tuza Quinatoa Noemi | [edithtuza15-collab](https://github.com/edithtuza15-collab) | | | | |
+
+---
+
+## Bibliografía
+
+Luis E. Vargas Azcona, *Problemas y Algoritmos*: capítulos 2 a 4 (recursión), 8 a 11 (complejidad), 13 y 14 (listas, árboles binarios, recorridos, ABB). [Documentación oficial de Java](https://docs.oracle.com/en/java/javase/17/docs/api/).
