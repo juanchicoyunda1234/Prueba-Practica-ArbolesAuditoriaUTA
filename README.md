@@ -190,3 +190,140 @@ Los datos se pueden cambiar en vivo desde las opciones 1 y 2 y todo resultado se
 
 ---
 
+## Diagramas
+
+### Arquitectura por capas
+
+```mermaid
+flowchart LR
+    app["app<br/>menú de consola"] --> negocio["negocio<br/>árboles, auditoría, análisis"]
+    negocio --> modelo["modelo<br/>Estudiante y nodos"]
+    pruebas["pruebas<br/>PruebasAceptacion"] --> negocio
+    pruebas --> modelo
+```
+
+### Diagrama de clases: modelo y estructuras
+
+```mermaid
+classDiagram
+    class Estudiante {
+        -int matricula
+        -String nombre
+        -ArrayList~Double~ notas
+        +actualizar(String, List~Double~) void
+        +agregarNota(double) void
+        +promedio() double
+        +notaMaxima() double
+        +notaMinima() double
+    }
+    class NodoABB {
+        -Estudiante dato
+        -NodoABB izquierdo
+        -NodoABB derecho
+        +esHoja() boolean
+    }
+    class UnidadAcademica {
+        -String codigo
+        -String nombre
+        -UnidadAcademica padre
+        -ArrayList~UnidadAcademica~ hijos
+        +esHoja() boolean
+    }
+    class NodoHijoHermano {
+        -String codigo
+        -String nombre
+        -NodoHijoHermano hijoIzquierdo
+        -NodoHijoHermano hermanoDerecho
+    }
+    class ArbolBinarioBusqueda {
+        -NodoABB raiz
+        +insertar(Estudiante) boolean
+        +buscar(int) Estudiante
+        +modificarDatos(int, String, List~Double~) boolean
+        +cambiarMatricula(int, int) boolean
+        +eliminar(int) boolean
+        +preorden() ArrayList~Integer~
+        +inorden() ArrayList~Integer~
+        +posorden() ArrayList~Integer~
+        +altura() int
+        +contarNodos() int
+        +contarHojas() int
+        +minimo() Estudiante
+        +maximo() Estudiante
+        +promedioGeneral() double
+        +esValido() boolean
+        +comparacionesBusqueda(int) int
+    }
+    class ArbolGeneral {
+        -UnidadAcademica raiz
+        +crearRaiz(String, String) boolean
+        +agregarUnidad(String, String, String) boolean
+        +buscar(String) UnidadAcademica
+        +nivel(String) int
+        +grado(String) int
+        +altura() int
+        +numeroNodos() int
+        +numeroHojas() int
+        +eliminar(String) boolean
+        +imprimirJerarquia() String
+        +jerarquiaValida() boolean
+        +convertirAHijoHermano() NodoHijoHermano
+    }
+    NodoABB --> Estudiante : dato
+    NodoABB --> NodoABB : izquierdo y derecho
+    ArbolBinarioBusqueda *-- NodoABB : raiz
+    UnidadAcademica --> UnidadAcademica : hijos
+    ArbolGeneral *-- UnidadAcademica : raiz
+    ArbolGeneral ..> NodoHijoHermano : convierte
+```
+
+### Diagrama de clases: auditoría, análisis y menú
+
+```mermaid
+classDiagram
+    class Auditoria {
+        +generar(ArbolGeneral, ArbolBinarioBusqueda) ReporteAuditoria
+    }
+    class ReporteAuditoria {
+        <<record>>
+        +resumen() String
+    }
+    class AnalisisBusqueda {
+        +comparar(int[], int, int) ResultadoAnalisis
+        +ordenEquilibrado(int[]) int[]
+    }
+    class ResultadoAnalisis {
+        <<record>>
+        +resumen() String
+    }
+    class DatosIniciales {
+        +crearJerarquia() ArbolGeneral
+        +crearEstudiantes() ArbolBinarioBusqueda
+    }
+    class Contexto {
+        -ArbolGeneral general
+        -ArbolBinarioBusqueda abb
+        +cargarObligatorios() void
+        +vaciar() void
+    }
+    class Main
+    class MenuArbolGeneral
+    class MenuABB
+    class EscenarioAceptacion
+    class Consola
+    Auditoria ..> ReporteAuditoria
+    AnalisisBusqueda ..> ResultadoAnalisis
+    Contexto ..> DatosIniciales
+    Main --> Contexto
+    Main --> MenuArbolGeneral
+    Main --> MenuABB
+    Main ..> EscenarioAceptacion
+    Main ..> Auditoria
+    Main ..> AnalisisBusqueda
+    MenuArbolGeneral --> Contexto
+    MenuABB --> Contexto
+    MenuArbolGeneral --> Consola
+    MenuABB --> Consola
+    EscenarioAceptacion --> Contexto
+```
+
