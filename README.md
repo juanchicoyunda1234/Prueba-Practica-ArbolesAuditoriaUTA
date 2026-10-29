@@ -441,3 +441,23 @@ El ABB **no se autoequilibra**: que la búsqueda sea O(log n) depende del orden 
 
 ---
 
+## Cobertura de pruebas
+
+El ejecutable [`PruebasAceptacion`](src/test/java/uta/arboles/pruebas/PruebasAceptacion.java) corre **24 casos** con aserciones propias (sin dependencias externas) y termina con código 1 si alguno falla. Cada requisito de la prueba práctica está cubierto así:
+
+| Requisito | Casos |
+|---|---|
+| Mínimo 12 casos | 24 |
+| Jerarquía válida | 01 |
+| Jerarquía inválida | 02 (código duplicado), 03 (padre inexistente y datos vacíos) |
+| Padre inexistente | 03 |
+| Duplicados | 02 (árbol general), 11 (ABB) |
+| Árbol vacío | 05 (árbol general), 16 (ABB) |
+| Raíz única | 04 |
+| Inorden antes y después de eliminar | 24 (valores exactos), 09 y 13 (antes y después), 15 (ascendente y válido) |
+| Eliminación de unidad no hoja | 06 |
+| Consistencia del promedio | 18, 23 (y 12 al modificar) |
+| Otros casos límite | 07, 08, 10, 14, 17, 19, 20, 21, 22 |
+
+---
+
