@@ -1,0 +1,105 @@
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: 
+=== 1. Jerarquía inicial ===
+UTA (Universidad Técnica de Ambato)
+  FISEI (Facultad de Ingeniería en Sistemas, Electrónica e Industrial)
+    SOFTWARE (Carrera de Software)
+      3A (Software tercer nivel paralelo A)
+      3B (Software tercer nivel paralelo B)
+    TI (Carrera de Tecnologías de la Información)
+      4A (Tecnologías de la Información cuarto nivel paralelo A)
+  FCHE (Facultad de Ciencias Humanas y de la Educación)
+  FCS (Facultad de Ciencias de la Salud)
+Unidades: 9
+Hojas: 5
+Altura: 3
+Grado de FISEI: 2
+Nivel de 3B: 3
+
+=== 2. ABB tras 12 inserciones ===
+Inorden: [20, 30, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85]
+Nodos: 12
+Altura: 3
+
+=== 3. Insertar de nuevo la matrícula 40 ===
+Inserción aceptada: false
+Nodos: 12
+
+=== 4. Modificar la matrícula 35 sin cambiar la clave ===
+Antes:   35 | Andrés Lema | notas=[8.0, 7.5, 8.5] | promedio=8.00 | max=8.50 | min=7.50
+Después: 35 | Andrés Lema Pérez | notas=[9.0, 9.5] | promedio=9.25 | max=9.50 | min=9.00
+Inorden: [20, 30, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85]
+
+=== 5. Eliminar 20 (hoja), 60 (un hijo) y 70 (dos hijos) ===
+Eliminar 20: true
+Eliminar 60: true
+Eliminar 70: true
+Inorden: [30, 35, 40, 45, 50, 65, 75, 80, 85]
+Preorden: [50, 30, 40, 35, 45, 75, 65, 80, 85]
+Nodos: 9
+Altura: 3
+Invariante ABB: se cumple
+
+=== 6. Eliminar FISEI con descendencia ===
+Eliminación aceptada: false
+Jerarquía sin cambios: true
+
+=== 7. Transformación hijo izquierdo y hermano derecho ===
+UTA | hijo izquierdo: FISEI | hermano derecho: -
+FISEI | hijo izquierdo: SOFTWARE | hermano derecho: FCHE
+SOFTWARE | hijo izquierdo: 3A | hermano derecho: TI
+3A | hijo izquierdo: - | hermano derecho: 3B
+3B | hijo izquierdo: - | hermano derecho: -
+TI | hijo izquierdo: 4A | hermano derecho: -
+4A | hijo izquierdo: - | hermano derecho: -
+FCHE | hijo izquierdo: - | hermano derecho: FCS
+FCS | hijo izquierdo: - | hermano derecho: -
+
+=== 8. Árboles vacíos y de un nodo ===
+General vacío: altura=-1, nodos=0, hojas=0, buscar=no existe, eliminar=false
+General con raíz única: altura=0, nodos=1, hojas=1, eliminar raíz=false
+ABB vacío: altura=-1, nodos=0, inorden=[], buscar=no existe, eliminar=false, menor=N/A, promedio=0.0, válido=true
+ABB de un nodo: altura=0, nodos=1, hojas=1
+
+=== 9. Búsqueda: cadena contra equilibrado (mismas 12 matrículas) ===
+Tamaño de cada ABB: n = 12
+                                           Cadena       Equilibrado 
+Altura (aristas)                           11           3           
+Comparaciones buscando 85 (existe)         12           4           
+Comparaciones buscando 90 (no existe)      12           4           
+Promedio sobre las 12 claves existentes    6.50         3.08        
+Cada comparación es un nodo visitado. La búsqueda cuesta O(h): h = n - 1 en la cadena,
+y h es menor solo porque el orden de inserción se diseñó; el ABB no se equilibra solo.
+
+=== 10. Auditoría final ===
+Total de unidades: 9
+Hojas del árbol general: 5
+Altura general (aristas): 3
+Jerarquía válida (códigos únicos, sin ciclos): sí
+Total de estudiantes: 9
+Matrícula menor: 30
+Matrícula mayor: 85
+Promedio general: 8.31
+Invariante del ABB: se cumple
+
+Los árboles quedaron en el estado final del escenario.
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: Hasta luego.

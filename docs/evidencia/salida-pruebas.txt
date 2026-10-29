@@ -1,0 +1,26 @@
+[OK]    01 Jerarquía inicial: 9 unidades, 5 hojas, altura 3, grado FISEI 2, nivel 3B 3
+[OK]    02 Jerarquía inválida: código duplicado rechazado y conteo preservado
+[OK]    03 Jerarquía inválida: padre inexistente y datos vacíos rechazados
+[OK]    04 Raíz única: altura 0, una hoja, no se puede eliminar ni duplicar
+[OK]    05 Árbol general vacío: valores base sin excepciones
+[OK]    06 Eliminar FISEI con descendencia: rechazo y jerarquía sin cambios
+[OK]    07 Eliminar una hoja: se permite y ajusta grado y conteos
+[OK]    08 Transformación hijo izquierdo / hermano derecho
+[OK]    09 ABB tras 12 inserciones: inorden, nodos, altura y hojas
+[OK]    10 ABB: preorden y posorden de las 12 inserciones
+[OK]    11 ABB: insertar de nuevo 40 se rechaza y el conteo sigue en 12
+[OK]    12 ABB: modificar 35 sin alterar la clave ni la forma del árbol
+[OK]    13 ABB: eliminar 20, 60 y 70 deja el inorden esperado y 9 nodos
+[OK]    14 ABB: el sucesor inorden de 70 es 75 (preorden y posorden finales)
+[OK]    15 ABB: inorden antes y después de eliminar sigue ascendente y válido
+[OK]    16 ABB vacío: valores base sin excepciones
+[OK]    17 ABB de un nodo: altura 0 y vuelve a quedar vacío al eliminarlo
+[OK]    18 Consistencia del promedio, máximo y mínimo de notas individuales
+[OK]    19 Datos inválidos: nota fuera de rango, nombre vacío y modificación atómica
+[OK]    20 ABB: cambiar matrícula reubica el nodo y respeta el invariante
+[OK]    21 Búsqueda: cadena O(n) contra equilibrado O(h) con las mismas 12 claves
+[OK]    22 Orden de inserción equilibrado: empieza por la mediana y no pierde claves
+[OK]    23 Auditoría coincide con los datos del escenario inicial y final
+[OK]    24 Inorden antes y después de eliminar, con valores exactos en el mismo caso
+
+Casos aprobados: 24 | fallidos: 0
