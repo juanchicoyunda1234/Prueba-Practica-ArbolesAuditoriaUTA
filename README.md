@@ -461,3 +461,147 @@ El ejecutable [`PruebasAceptacion`](src/test/java/uta/arboles/pruebas/PruebasAce
 
 ---
 
+## Evidencia de ejecución y explicación
+
+Las salidas completas están en [`docs/evidencia/`](docs/evidencia/): [`salida-pruebas.txt`](docs/evidencia/salida-pruebas.txt), [`salida-escenario.txt`](docs/evidencia/salida-escenario.txt) y [`salida-auditoria.txt`](docs/evidencia/salida-auditoria.txt). Las imágenes de cada ejecución están en [Capturas de evidencia](#capturas-de-evidencia). Abajo, la ejecución del **escenario obligatorio** (opción 6 del menú) con su explicación. Cada resultado se calcula en el momento, no está escrito de antemano.
+
+### Pruebas automatizadas
+
+```
+Casos aprobados: 24 | fallidos: 0
+```
+
+Lista completa de los 24 casos: [`docs/evidencia/salida-pruebas.txt`](docs/evidencia/salida-pruebas.txt) o la imagen [02](docs/capturas/02-pruebas-24-ok.png).
+
+### 1. Jerarquía inicial
+
+```
+UTA (Universidad Técnica de Ambato)
+  FISEI (Facultad de Ingeniería en Sistemas, Electrónica e Industrial)
+    SOFTWARE (Carrera de Software)
+      3A (Software tercer nivel paralelo A)
+      3B (Software tercer nivel paralelo B)
+    TI (Carrera de Tecnologías de la Información)
+      4A (Tecnologías de la Información cuarto nivel paralelo A)
+  FCHE (Facultad de Ciencias Humanas y de la Educación)
+  FCS (Facultad de Ciencias de la Salud)
+Unidades: 9
+Hojas: 5
+Altura: 3
+Grado de FISEI: 2
+Nivel de 3B: 3
+```
+
+La altura es 3 porque el camino más largo es UTA → FISEI → SOFTWARE → 3A, que tiene 3 aristas. FISEI tiene dos hijos directos (SOFTWARE y TI), por eso su grado es 2. 3B está a tres aristas de la raíz, por eso su nivel es 3.
+
+### 2. ABB tras 12 inserciones
+
+```
+Inorden: [20, 30, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85]
+Nodos: 12
+Altura: 3
+```
+
+El primer valor insertado (50) queda como raíz; en cada nodo se compara y se baja a la izquierda si es menor o a la derecha si es mayor. Por la propiedad del ABB, el recorrido inorden sale siempre ascendente.
+
+### 3. Insertar de nuevo la matrícula 40
+
+```
+Inserción aceptada: false
+Nodos: 12
+```
+
+`insertar` compara en cada nodo; al encontrar una clave igual devuelve `false` sin tocar nada, por eso el conteo sigue en 12.
+
+### 4. Modificar la matrícula 35 sin cambiar la clave
+
+```
+Antes:   35 | Andrés Lema | notas=[8.0, 7.5, 8.5] | promedio=8.00 | max=8.50 | min=7.50
+Después: 35 | Andrés Lema Pérez | notas=[9.0, 9.5] | promedio=9.25 | max=9.50 | min=9.00
+Inorden: [20, 30, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85]
+```
+
+Cambian el nombre y las notas, pero la matrícula (la clave) no. Como el nodo no se mueve, la forma del árbol y el inorden quedan iguales. Cambiar la clave exigiría reposicionar el nodo (ver `cambiarMatricula`).
+
+### 5. Eliminar 20 (hoja), 60 (un hijo) y 70 (dos hijos)
+
+```
+Eliminar 20: true
+Eliminar 60: true
+Eliminar 70: true
+Inorden: [30, 35, 40, 45, 50, 65, 75, 80, 85]
+Preorden: [50, 30, 40, 35, 45, 75, 65, 80, 85]
+Nodos: 9
+Altura: 3
+Invariante ABB: se cumple
+```
+
+- **20** es hoja: simplemente se quita.
+- **60** tiene un solo hijo (65): el hijo ocupa su lugar.
+- **70** tiene dos hijos: se busca su sucesor inorden, el mínimo del subárbol derecho (75), se copian sus datos al nodo y se elimina el 75 de donde estaba. Por eso el 75 aparece donde estaba el 70 en el preorden.
+
+### 6. Eliminar FISEI con descendencia
+
+```
+Eliminación aceptada: false
+Jerarquía sin cambios: true
+```
+
+Solo pueden eliminarse unidades hoja y FISEI tiene descendientes, así que se rechaza sin modificar el árbol.
+
+### 7. Transformación hijo izquierdo / hermano derecho
+
+```
+UTA | hijo izquierdo: FISEI | hermano derecho: -
+FISEI | hijo izquierdo: SOFTWARE | hermano derecho: FCHE
+SOFTWARE | hijo izquierdo: 3A | hermano derecho: TI
+3A | hijo izquierdo: - | hermano derecho: 3B
+3B | hijo izquierdo: - | hermano derecho: -
+TI | hijo izquierdo: 4A | hermano derecho: -
+4A | hijo izquierdo: - | hermano derecho: -
+FCHE | hijo izquierdo: - | hermano derecho: FCS
+FCS | hijo izquierdo: - | hermano derecho: -
+```
+
+El primer hijo de cada unidad pasa a ser su hijo izquierdo y cada hermano cuelga del anterior por la derecha. La equivalencia estructural se conserva: de la cadena de hermanos se recupera el orden exacto de los hijos (lo verifica la prueba 08). La izquierda baja al hijo; la derecha avanza al hermano, no es un hijo.
+
+### 8. Árboles vacíos y de un nodo
+
+```
+General vacío: altura=-1, nodos=0, hojas=0, buscar=no existe, eliminar=false
+General con raíz única: altura=0, nodos=1, hojas=1, eliminar raíz=false
+ABB vacío: altura=-1, nodos=0, inorden=[], buscar=no existe, eliminar=false, menor=N/A, promedio=0.0, válido=true
+ABB de un nodo: altura=0, nodos=1, hojas=1
+```
+
+Los casos base (`altura(null) = -1`) evitan `NullPointerException`: es lo que hace que `1 + max(-1, -1)` dé 0 para una hoja.
+
+### 9. Búsqueda: cadena contra equilibrado (mismas 12 matrículas)
+
+```
+Tamaño de cada ABB: n = 12
+                                           Cadena       Equilibrado 
+Altura (aristas)                           11           3           
+Comparaciones buscando 85 (existe)         12           4           
+Comparaciones buscando 90 (no existe)      12           4           
+Promedio sobre las 12 claves existentes    6.50         3.08        
+```
+
+Con n nodos, la búsqueda cuesta O(h). En la cadena h = n - 1, así que es O(n). En el árbol equilibrado h es cercana a log₂ n, pero solo porque el orden de inserción se diseñó para eso: un ABB no se equilibra solo.
+
+### 10. Auditoría final
+
+```
+Total de unidades: 9
+Hojas del árbol general: 5
+Altura general (aristas): 3
+Jerarquía válida (códigos únicos, sin ciclos): sí
+Total de estudiantes: 9
+Matrícula menor: 30
+Matrícula mayor: 85
+Promedio general: 8.31
+Invariante del ABB: se cumple
+```
+
+---
+
