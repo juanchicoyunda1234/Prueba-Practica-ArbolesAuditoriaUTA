@@ -18,23 +18,20 @@ El sistema audita a la vez la jerarquía académica de la Facultad (**árbol gen
 9. [Cobertura de pruebas](#cobertura-de-pruebas)
 10. [Evidencia de ejecución y explicación](#evidencia-de-ejecución-y-explicación)
 11. [Capturas de evidencia](#capturas-de-evidencia)
-12. [GitHub y colaboración](#github-y-colaboración)
-13. [Bibliografía](#bibliografía)
+12. [Bibliografía](#bibliografía)
 
 ---
 
 ## Integrantes
 
-| Integrante | Usuario GitHub | Responsabilidad asignada | Módulo asignado |
-|---|---|---|---|
-| Chico Yunda Juan Carlos (líder) | juanchicoyunda1234 | Liderazgo, integración final, casos de prueba, README | `negocio.Auditoria`, `negocio.AnalisisBusqueda`, `negocio.DatosIniciales`, `pruebas.PruebasAceptacion` |
-| Torosina Armendariz Jeremy | WinoSpop | Documentación y diagramas | Diagramas de clases, sección de estructuras del README |
-| Altamirano Segovia Jullisa | jullisaaltamirano2017-boop | Documentación e informe | `docs/evidencia`, evidencia de ejecución |
-| Romo Nunez Joseph | wayusa25-cmyk | Backend: modelo | Paquete `modelo` (clases de datos y nodos) |
-| Llamuca Abrajan Andres | llamucaandres161 | Backend: negocio | `negocio.ArbolGeneral`, `negocio.ArbolBinarioBusqueda` |
-| Tuza Quinatoa Noemi | edithtuza15-collab | Frontend: integración | Paquete `app` (`Main`, menús de consola) |
-
-Los aportes de cada persona se demuestran con sus propios commits y pull requests; ver [GitHub y colaboración](#github-y-colaboración).
+| Integrante | Usuario GitHub | Responsabilidad asignada |
+|---|---|---|
+| Chico Yunda Juan Carlos (líder) | [juanchicoyunda1234](https://github.com/juanchicoyunda1234) | Liderazgo, integración final, casos de prueba, README |
+| Torosina Armendariz Jeremy | [WinoSpop](https://github.com/WinoSpop) | Documentación y diagramas |
+| Altamirano Segovia Jullisa | [jullisaaltamirano2017-boop](https://github.com/jullisaaltamirano2017-boop) | Documentación e informe |
+| Romo Nunez Joseph | [wayusa25-cmyk](https://github.com/wayusa25-cmyk) | Backend: modelo |
+| Llamuca Abrajan Andres | [llamucaandres161](https://github.com/llamucaandres161) | Backend: negocio |
+| Tuza Quinatoa Noemi | [edithtuza15-collab](https://github.com/edithtuza15-collab) | Frontend: integración |
 
 ---
 
@@ -653,28 +650,6 @@ Se toman en GitHub cuando existan la pull request y los commits, y se guardan en
 |---|---|---|
 | ☐ | `07-pull-request-revisada.png` | Pull request aprobada por otro integrante |
 | ☐ | `08-historial-commits.png` | Historial de commits con autores distintos |
-
----
-
-## GitHub y colaboración
-
-- Una rama `feature/<integrante>-<tema>` por parte: `feature/joseph-modelo`, `feature/andres-arbol-general`, `feature/andres-abb`, `feature/juancarlos-auditoria-analisis`, `feature/noemi-menu`, `feature/juancarlos-pruebas`, `feature/jeremy-diagramas` y `feature/jullisa-evidencia`.
-- Cada integrante hace sus commits desde su propia cuenta, con mensajes que describan el cambio, sobre los módulos de la tabla de integrantes.
-- Al menos una pull request revisada por otro integrante antes de fusionar a `main`.
-- No se atribuyen aportes que no tengan evidencia en el historial del repositorio.
-
-### Tabla de contribuciones
-
-Completar con las evidencias reales del repositorio (enlace a commits y a la pull request).
-
-| Integrante | Usuario GitHub | Rama | Parte implementada | Prueba asociada | Commits / PR |
-|---|---|---|---|---|---|
-| Chico Yunda Juan Carlos | [juanchicoyunda1234](https://github.com/juanchicoyunda1234) | | | | |
-| Torosina Armendariz Jeremy | [WinoSpop](https://github.com/WinoSpop) | | | | |
-| Altamirano Segovia Jullisa | [jullisaaltamirano2017-boop](https://github.com/jullisaaltamirano2017-boop) | | | | |
-| Romo Nunez Joseph | [wayusa25-cmyk](https://github.com/wayusa25-cmyk) | | | | |
-| Llamuca Abrajan Andres | [llamucaandres161](https://github.com/llamucaandres161) | | | | |
-| Tuza Quinatoa Noemi | [edithtuza15-collab](https://github.com/edithtuza15-collab) | | | | |
 
 ---
 
