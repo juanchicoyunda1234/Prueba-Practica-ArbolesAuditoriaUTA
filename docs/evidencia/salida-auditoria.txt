@@ -1,0 +1,60 @@
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: Total de unidades: 0
+Hojas del árbol general: 0
+Altura general (aristas): -1
+Jerarquía válida (códigos únicos, sin ciclos): sí
+Total de estudiantes: 0
+Matrícula menor: N/A
+Matrícula mayor: N/A
+Promedio general: 0.00
+Invariante del ABB: se cumple
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: Datos obligatorios cargados: 9 unidades y 12 estudiantes.
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: Total de unidades: 9
+Hojas del árbol general: 5
+Altura general (aristas): 3
+Jerarquía válida (códigos únicos, sin ciclos): sí
+Total de estudiantes: 12
+Matrícula menor: 20
+Matrícula mayor: 85
+Promedio general: 8.10
+Invariante del ABB: se cumple
+
+=== Sistema de auditoría jerárquica y académica UTA ===
+1. Árbol general (jerarquía académica)
+2. ABB de estudiantes
+3. Auditoría
+4. Análisis de comparaciones de búsqueda
+5. Cargar datos obligatorios (reinicia ambos árboles)
+6. Ejecutar escenario obligatorio completo
+7. Vaciar ambos árboles
+0. Salir
+Opción: Hasta luego.
