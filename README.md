@@ -92,3 +92,101 @@ No se permite `TreeMap`, `TreeSet` ni paquetes externos que implementen internam
 
 ---
 
+## Estructura del repositorio
+
+```
+.
+├── README.md
+├── .gitignore
+├── docs/
+│   ├── capturas/                 capturas de pantalla de la evidencia (ver sección de capturas)
+│   └── evidencia/                salidas reales de la ejecución
+│       ├── salida-pruebas.txt
+│       ├── salida-escenario.txt
+│       └── salida-auditoria.txt
+└── src/
+    ├── main/java/uta/arboles/
+    │   ├── modelo/    Estudiante, NodoABB, UnidadAcademica, NodoHijoHermano
+    │   ├── negocio/   ArbolGeneral, ArbolBinarioBusqueda, Auditoria, ReporteAuditoria,
+    │   │              AnalisisBusqueda, ResultadoAnalisis, DatosIniciales
+    │   └── app/       Main, Consola, Contexto, MenuArbolGeneral, MenuABB, EscenarioAceptacion
+    └── test/java/uta/arboles/pruebas/
+        └── PruebasAceptacion.java      24 casos con aserciones
+```
+
+**Enlaces rápidos**
+
+| Qué | Dónde |
+|---|---|
+| Menú principal | [`Main.java`](src/main/java/uta/arboles/app/Main.java) |
+| Escenario obligatorio completo | [`EscenarioAceptacion.java`](src/main/java/uta/arboles/app/EscenarioAceptacion.java) |
+| Árbol general | [`ArbolGeneral.java`](src/main/java/uta/arboles/negocio/ArbolGeneral.java) |
+| Árbol binario de búsqueda | [`ArbolBinarioBusqueda.java`](src/main/java/uta/arboles/negocio/ArbolBinarioBusqueda.java) |
+| Auditoría | [`Auditoria.java`](src/main/java/uta/arboles/negocio/Auditoria.java) y [`ReporteAuditoria.java`](src/main/java/uta/arboles/negocio/ReporteAuditoria.java) |
+| Análisis de búsqueda | [`AnalisisBusqueda.java`](src/main/java/uta/arboles/negocio/AnalisisBusqueda.java) |
+| Modelo (datos y nodos) | [`modelo/`](src/main/java/uta/arboles/modelo/) |
+| Pruebas automatizadas | [`PruebasAceptacion.java`](src/test/java/uta/arboles/pruebas/PruebasAceptacion.java) |
+| Salidas de ejecución | [`docs/evidencia/`](docs/evidencia/) |
+| Capturas de evidencia | [`docs/capturas/`](docs/capturas/) |
+
+---
+
+## Compilar, ejecutar y probar
+
+Requisito: [JDK 17 o superior](https://adoptium.net/) (`javac -version`). En Visual Studio Code sirve el [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack). Los comandos se ejecutan desde la carpeta raíz del repositorio.
+
+**Compilar y ejecutar el menú**
+
+```
+javac -encoding UTF-8 -d out -sourcepath src/main/java src/main/java/uta/arboles/app/Main.java
+java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -cp out uta.arboles.app.Main
+```
+
+**Compilar y ejecutar las pruebas**
+
+Windows:
+
+```
+javac -encoding UTF-8 -cp out -d out-test src/test/java/uta/arboles/pruebas/PruebasAceptacion.java
+java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -cp "out;out-test" uta.arboles.pruebas.PruebasAceptacion
+```
+
+Linux o macOS: cambiar `"out;out-test"` por `out:out-test`.
+
+El ejecutable de pruebas termina con código 1 si falla algún caso. Si los acentos se ven mal en Windows, ejecutar antes `chcp 65001`.
+
+---
+
+## Menú de consola
+
+| Opción | Acción |
+|---|---|
+| 1 | Árbol general: crear raíz, agregar, buscar, eliminar, renombrar, imprimir con sangría, métricas, conversión hijo izquierdo / hermano derecho |
+| 2 | ABB: insertar, buscar, modificar nombre o notas, agregar nota, cambiar matrícula, eliminar, recorridos, listar, métricas |
+| 3 | Auditoría: unidades, hojas, altura general, matrícula menor y mayor, promedio y validez del invariante ABB |
+| 4 | Análisis de comparaciones de búsqueda entre un ABB en cadena y uno equilibrado |
+| 5 | Cargar los datos obligatorios (reinicia ambos árboles) |
+| 6 | Ejecutar el escenario obligatorio completo |
+| 7 | Vaciar ambos árboles |
+| 0 | Salir |
+
+Los datos se pueden cambiar en vivo desde las opciones 1 y 2 y todo resultado se calcula en el momento. Una entrada inválida (texto en lugar de número, nota fuera de rango, código repetido, padre inexistente, árbol vacío) muestra un aviso y vuelve al menú sin excepciones.
+
+---
+
+## Diseño y decisiones
+
+- **Capas:** `app` (menú) usa `negocio` (árboles, auditoría, análisis), que usa `modelo` (datos y nodos). Las pruebas ejercitan `negocio` y `modelo` directamente.
+- Altura y nivel se miden en **aristas**: árbol vacío -1, un nodo 0, raíz en nivel 0.
+- Una operación rechazada devuelve `false` y deja la estructura sin cambios.
+- Los códigos de unidad se normalizan a mayúsculas y sin espacios en los extremos. Son únicos en todo el árbol y, como solo se agregan hojas nuevas, no puede haber ciclos. `jerarquiaValida()` lo comprueba.
+- Una unidad no raíz se elimina solo si es hoja. La raíz UTA no se elimina nunca.
+- Cada estudiante guarda una lista de **notas individuales** entre 0 y 10. Su promedio es la media aritmética y también tiene nota máxima y mínima. El promedio general es la media de los promedios de los estudiantes.
+- La clave del ABB es la matrícula. `modificarDatos` cambia nombre o notas sin tocar la clave. `cambiarMatricula` elimina el nodo y lo inserta con la clave nueva, porque editar la clave en el sitio rompería el orden del árbol.
+- La eliminación con dos hijos usa el **sucesor inorden** (mínimo del subárbol derecho): es el menor valor que es mayor que todo el subárbol izquierdo, así el orden se conserva.
+- Casos base de la recursión: `altura(null) = -1`, `contarNodos(null) = 0`, `buscar(null) = null`, `insertar` en un hueco crea el nodo.
+- El árbol general guarda los hijos en un `ArrayList`, igual que los resultados de recorridos. No se usa `TreeMap`, `TreeSet` ni librerías externas.
+- Los dos ABB del análisis tienen las mismas claves. Uno se construye en orden ascendente (cadena) y el otro con un orden de inserción por medianas. Una comparación es un nodo visitado.
+
+---
+
