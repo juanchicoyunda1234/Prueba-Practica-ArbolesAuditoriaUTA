@@ -71,6 +71,68 @@ public class ArbolBinarioBusqueda {
         return true;
     }
 
+    public ArrayList<Integer> preorden() {
+        ArrayList<Integer> claves = new ArrayList<>();
+        preorden(raiz, claves);
+        return claves;
+    }
+
+    public ArrayList<Integer> inorden() {
+        ArrayList<Integer> claves = new ArrayList<>();
+        inorden(raiz, claves);
+        return claves;
+    }
+
+    public ArrayList<Integer> posorden() {
+        ArrayList<Integer> claves = new ArrayList<>();
+        posorden(raiz, claves);
+        return claves;
+    }
+
+    public ArrayList<Estudiante> listarInorden() {
+        ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        listarInorden(raiz, estudiantes);
+        return estudiantes;
+    }
+
+    public int altura() {
+        return altura(raiz);
+    }
+
+    public int contarNodos() {
+        return contarNodos(raiz);
+    }
+
+    public int contarHojas() {
+        return contarHojas(raiz);
+    }
+
+    public Estudiante minimo() {
+        if (raiz == null) {
+            return null;
+        }
+        return minimoNodo(raiz).getDato();
+    }
+
+    public Estudiante maximo() {
+        if (raiz == null) {
+            return null;
+        }
+        return maximoNodo(raiz).getDato();
+    }
+
+    public double promedioGeneral() {
+        int total = contarNodos(raiz);
+        if (total == 0) {
+            return 0.0;
+        }
+        return sumarPromedios(raiz) / total;
+    }
+
+    public boolean esValido() {
+        return validar(raiz, null, null);
+    }
+
     private boolean insertar(NodoABB actual, Estudiante estudiante) {
         int comparacion = Integer.compare(estudiante.getMatricula(), actual.getDato().getMatricula());
         if (comparacion == 0) {
@@ -155,5 +217,89 @@ public class ArbolBinarioBusqueda {
             return actual;
         }
         return maximoNodo(actual.getDerecho());
+    }
+
+    private void preorden(NodoABB actual, ArrayList<Integer> claves) {
+        if (actual == null) {
+            return;
+        }
+        claves.add(actual.getDato().getMatricula());
+        preorden(actual.getIzquierdo(), claves);
+        preorden(actual.getDerecho(), claves);
+    }
+
+    private void inorden(NodoABB actual, ArrayList<Integer> claves) {
+        if (actual == null) {
+            return;
+        }
+        inorden(actual.getIzquierdo(), claves);
+        claves.add(actual.getDato().getMatricula());
+        inorden(actual.getDerecho(), claves);
+    }
+
+    private void posorden(NodoABB actual, ArrayList<Integer> claves) {
+        if (actual == null) {
+            return;
+        }
+        posorden(actual.getIzquierdo(), claves);
+        posorden(actual.getDerecho(), claves);
+        claves.add(actual.getDato().getMatricula());
+    }
+
+    private void listarInorden(NodoABB actual, ArrayList<Estudiante> estudiantes) {
+        if (actual == null) {
+            return;
+        }
+        listarInorden(actual.getIzquierdo(), estudiantes);
+        estudiantes.add(actual.getDato());
+        listarInorden(actual.getDerecho(), estudiantes);
+    }
+
+    private int altura(NodoABB actual) {
+        if (actual == null) {
+            return -1;
+        }
+        return 1 + Math.max(altura(actual.getIzquierdo()), altura(actual.getDerecho()));
+    }
+
+    private int contarNodos(NodoABB actual) {
+        if (actual == null) {
+            return 0;
+        }
+        return 1 + contarNodos(actual.getIzquierdo()) + contarNodos(actual.getDerecho());
+    }
+
+    private int contarHojas(NodoABB actual) {
+        if (actual == null) {
+            return 0;
+        }
+        if (actual.esHoja()) {
+            return 1;
+        }
+        return contarHojas(actual.getIzquierdo()) + contarHojas(actual.getDerecho());
+    }
+
+    private double sumarPromedios(NodoABB actual) {
+        if (actual == null) {
+            return 0.0;
+        }
+        return actual.getDato().promedio()
+                + sumarPromedios(actual.getIzquierdo())
+                + sumarPromedios(actual.getDerecho());
+    }
+
+    private boolean validar(NodoABB actual, Integer limiteInferior, Integer limiteSuperior) {
+        if (actual == null) {
+            return true;
+        }
+        int clave = actual.getDato().getMatricula();
+        if (limiteInferior != null && clave <= limiteInferior) {
+            return false;
+        }
+        if (limiteSuperior != null && clave >= limiteSuperior) {
+            return false;
+        }
+        return validar(actual.getIzquierdo(), limiteInferior, clave)
+                && validar(actual.getDerecho(), clave, limiteSuperior);
     }
 }
