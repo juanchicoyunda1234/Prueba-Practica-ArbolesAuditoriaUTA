@@ -327,3 +327,117 @@ classDiagram
     EscenarioAceptacion --> Contexto
 ```
 
+### Árbol general de los datos obligatorios
+
+```mermaid
+flowchart TD
+    UTA --> FISEI
+    UTA --> FCHE
+    UTA --> FCS
+    FISEI --> SOFTWARE
+    FISEI --> TI
+    SOFTWARE --> A3["3A"]
+    SOFTWARE --> B3["3B"]
+    TI --> A4["4A"]
+```
+
+### Conversión hijo izquierdo / hermano derecho
+
+Línea continua: primer hijo (izquierda). Línea punteada: siguiente hermano (derecha).
+
+```mermaid
+flowchart TD
+    UTA -->|"hijo"| FISEI
+    FISEI -.->|"hermano"| FCHE
+    FCHE -.->|"hermano"| FCS
+    FISEI -->|"hijo"| SOFTWARE
+    SOFTWARE -.->|"hermano"| TI
+    SOFTWARE -->|"hijo"| A3["3A"]
+    A3 -.->|"hermano"| B3["3B"]
+    TI -->|"hijo"| A4["4A"]
+```
+
+La raíz nunca tiene hermano derecho. Cada hermano cuelga del anterior, formando una cadena hacia la derecha.
+
+### ABB tras las 12 inserciones
+
+```mermaid
+flowchart TD
+    n50((50)) --> n30((30))
+    n50 --> n70((70))
+    n30 --> n20((20))
+    n30 --> n40((40))
+    n40 --> n35((35))
+    n40 --> n45((45))
+    n70 --> n60((60))
+    n70 --> n80((80))
+    n60 -->|"der"| n65((65))
+    n80 --> n75((75))
+    n80 --> n85((85))
+```
+
+### ABB tras eliminar 20, 60 y 70
+
+El 20 era hoja, el 60 tenía un hijo (65 ocupa su lugar) y el 70 tenía dos hijos (lo reemplaza su sucesor inorden, el 75).
+
+```mermaid
+flowchart TD
+    m50((50)) --> m30((30))
+    m50 --> m75((75))
+    m30 -->|"der"| m40((40))
+    m40 --> m35((35))
+    m40 --> m45((45))
+    m75 --> m65((65))
+    m75 --> m80((80))
+    m80 -->|"der"| m85((85))
+```
+
+### Flujo de eliminación en el ABB
+
+```mermaid
+flowchart TD
+    A["eliminar(matricula)"] --> B{"¿existe?"}
+    B -- "no" --> F["devolver false"]
+    B -- "sí" --> C{"¿cuántos hijos tiene el nodo?"}
+    C -- "ninguno" --> D["quitar el nodo"]
+    C -- "uno" --> E["el hijo ocupa su lugar"]
+    C -- "dos" --> G["buscar el sucesor inorden: mínimo del subárbol derecho"]
+    G --> H["copiar los datos del sucesor al nodo"]
+    H --> I["eliminar el sucesor del subárbol derecho"]
+    D --> J["devolver true"]
+    E --> J
+    I --> J
+```
+
+### Secuencia: cambiar una matrícula en vivo
+
+```mermaid
+sequenceDiagram
+    participant D as Docente
+    participant M as MenuABB
+    participant T as ArbolBinarioBusqueda
+    D->>M: cambiar la matrícula 35 por 36
+    M->>T: cambiarMatricula(35, 36)
+    T->>T: buscar(35) y comprobar que 36 no existe
+    T->>T: eliminar(35)
+    T->>T: insertar(estudiante con matrícula 36)
+    T-->>M: true
+    M-->>D: Matrícula cambiada
+```
+
+---
+
+## Complejidad
+
+| Operación | Costo |
+|---|---|
+| ABB: insertar, buscar, modificar, eliminar | O(h): O(n) en cadena, O(log n) solo si el árbol está equilibrado |
+| ABB: recorridos, altura, conteos, promedio general | O(n) |
+| ABB: mínimo y máximo | O(h) |
+| Árbol general: buscar, agregar, eliminar | O(n) |
+| Árbol general: altura, conteos, impresión, conversión | O(n) |
+
+El ABB **no se autoequilibra**: que la búsqueda sea O(log n) depende del orden de inserción. Con las mismas 12 claves, insertadas en orden ascendente, el árbol es una cadena de altura 11 y buscar el 85 cuesta 12 comparaciones; con un orden por medianas la altura es 3 y cuesta 4.
+
+---
+
